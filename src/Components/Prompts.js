@@ -124,89 +124,128 @@ export default function Prompts() {
   // The following weeks still needs to be filled out
   const panel7 = new PanelClass("panel7", classes, expanded, handleChange);
   panel7.setHeading("Week 7:");
-  panel7.setSecondaryHeading("");
+  panel7.setSecondaryHeading("Strings and Arrays");
   panel7.setDescriptionDetails(<p>
-
+    A string is a type of variable used for storing a set of characters. Similarly an array can be used to store
+    a set of several variables. For example the words "hello world" can be stored into a variable as a string. A set
+    of integers can be stored in an array containing integers.
   </p>);
   panel7.setChallengeDetails(<p>
-
+    Line 2 creates an array with two strings stored in it. Line three appends another string to the end of the array.
+    Line 5 will print the first string in the array. Append the words "teaches" and "python" to the array and print
+    all of the words in the array.
   </p>);
 
 
   const panel9 = new PanelClass("panel9", classes, expanded, handleChange);
   panel9.setHeading("Week 9:");
-  panel9.setSecondaryHeading("");
+  panel9.setSecondaryHeading("Loops");
   panel9.setDescriptionDetails(<p>
-
+    There are many tasks that are repetitive, such as printing variables from an array. Instead of copying and pasting
+    code a loop can be used for these tasks. There are many different types of loops. A while() loop can be used to
+    loop until a certain condition is met. A for loop can be used to loop through a set of items. For example, an
+    array can be looped through using for(word in words). Word is a variable used in the for loop to represent each
+    word in the words array.
   </p>);
   panel9.setChallengeDetails(<p>
-
+    Line 2 creates an array of integers. Line 7 prints the total of a sum divided by the array length. Use a for loop
+    to loop through each number in the array and sum the total in the sum variable. Then notice how the average will
+    be printed from the print statement.
   </p>);
 
 
   const panel10 = new PanelClass("panel10", classes, expanded, handleChange);
   panel10.setHeading("Week 10:");
-  panel10.setSecondaryHeading("");
+  panel10.setSecondaryHeading("Functions");
   panel10.setDescriptionDetails(<p>
-
+    In programming, a function can be used to do a certain set of tasks. For example, in each program you have created
+    so far a main() function has been used. In programming languages, function main is used to run the core code of
+    a program. A function can have a set of variables inputted into the function as well. Any variables used in a
+    function will be deleted when the function has ended. A return statement can be used in a function to return a
+    variable as output.
   </p>);
   panel10.setChallengeDetails(<p>
-
+    Lines 9 through 16 is a function that calulates the distance between 2 points using the distance formula. Line 9
+    specifies that the function should take 4 different variables. Lines 13 and 14 use the math library to use the
+    power and square root math functions. Line 16 returns the distance of the 2 points. Use the calculateDistance
+    function in main to print the distance of three different sets of points.
   </p>);
 
 
   const panel11 = new PanelClass("panel11", classes, expanded, handleChange);
   panel11.setHeading("Week 11:");
-  panel11.setSecondaryHeading("");
+  panel11.setSecondaryHeading("Average Function");
   panel11.setDescriptionDetails(<p>
-
+    Functions can take arrays as inputs as well. The goal of this program is to create a function that can average an
+    array of numbers and return the average. The numbers variable in line 4 is an array of numbers.
   </p>);
   panel11.setChallengeDetails(<p>
-
+    Fill out the average function to perform its specified task. Then, create two arrays with a set of numbers in them
+    within main. Then call the average function twice with each of the inputs being the arrays you created. Either
+    store the outputs in variables and print them after or encase the function call within print to immediately print
+    the returned value.
   </p>);
 
 
   const panel12 = new PanelClass("panel12", classes, expanded, handleChange);
   panel12.setHeading("Week 12:");
-  panel12.setSecondaryHeading("");
+  panel12.setSecondaryHeading("Conditional Logic");
   panel12.setDescriptionDetails(<p>
-
+    Conditional logic refers to making decisions based on a certain condition. When programing different decisions
+    can be made using "if" "else" statements. A condition can be set and the program can either execute the code in the
+    "if" block if the specific condition is met, or execute the code in the "else" block if the condition is not
+    met. This allows programs to make varied decisions.
   </p>);
   panel12.setChallengeDetails(<p>
-
+    Write a program that allows a user to enter a sentence. The program should count the amount of lowercase and
+    uppercase letters are in the sentence and print the results. The program needs to loop through each character in
+    the string and use conditional logic to determine if its lowercase or uppercase.  You can use the .isUpper or
+    .isLower built in functions to determine this.
   </p>);
 
 
   const panel13 = new PanelClass("panel13", classes, expanded, handleChange);
   panel13.setHeading("Week 13:");
-  panel13.setSecondaryHeading("");
+  panel13.setSecondaryHeading("Multi-function Calculator");
   panel13.setDescriptionDetails(<p>
-
+    If statements can also have more than two different conditional judgements. Using elif between the if and else
+    keywords an unlimited multitude of conditional selection cases can be used.
   </p>);
   panel13.setChallengeDetails(<p>
-
+    Write a program that asks the user to enter either "+", "-", "*", or "/" to perform a certain math operation.
+    Then ask the user to enter two different numbers. Use multi-conditional if, elif, else case to determine which
+    operation to preform with these numbers and output the result to the user.
   </p>);
 
 
   const panel14 = new PanelClass("panel14", classes, expanded, handleChange);
   panel14.setHeading("Week 14:");
-  panel14.setSecondaryHeading("");
+  panel14.setSecondaryHeading("Reading Files");
   panel14.setDescriptionDetails(<p>
-
+    Python has the ability to open or create files. The open("filename", "permissions") built in function can be used
+    to open or create a file and store it in a variable. Then several functions can be called from this variable to
+    preform actions such as writing or reading data from the file. For example, variableName.readline() can be used
+    to read a line in the file.
   </p>);
   panel14.setChallengeDetails(<p>
-
+    Finish writing a program that asks a user for a file name. The program should then open the file and print all
+    the contents of it for the user to see. The "r" in line 3 states that the file will be opened in read only mode.
+    It is important to use .close() to close a file after you are done with it.
   </p>);
 
 
   const panel15 = new PanelClass("panel15", classes, expanded, handleChange);
   panel15.setHeading("Week 15:");
-  panel15.setSecondaryHeading("");
+  panel15.setSecondaryHeading("Writing Files");
   panel15.setDescriptionDetails(<p>
-
+    Writing to a file is similar to reading from a file. To overwrite a file "w" can be used and "a" can be used to
+    append contents to a file. Functions line .write("data") can be used to write the data to the file.
   </p>);
   panel15.setChallengeDetails(<p>
-
+    Create a program that will create a file and have the user write lines to it. Have the program continuously loop
+    and during each loop prompt the user to enter data for a line. Use variableName.write("content") to write data
+    to the file. Once the user enters "..." the infinite loop should break and the program should save the file
+    and exit.
   </p>);
 
   // Returns the HTML for every single panel
