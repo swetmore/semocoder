@@ -3,7 +3,6 @@
 
 import React from "react";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Accordion from "@material-ui/core/Accordion";
@@ -51,7 +50,7 @@ export default class PanelClass {
                 onChange={this.handleChange(this.panelName)}
             >
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
+                    // expandIcon={<ExpandMoreIcon/>}
                     aria-controls={this.panelName + "bh-content"}
                     id={this.panelName + "bh-content"}
                 >
