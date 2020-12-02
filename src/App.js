@@ -4,13 +4,18 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Coder from './Pages/Coder.js';
-import Login from './Pages/Login.js';
-import Signup from './Pages/Signup.js';
-import Navbar from './Components/Navbar.js';
 
+import Auth from './Components/Auth';
+import Coder from './Pages/Coder.js';
+import Navbar from './Components/Navbar.js';
+import LoginButton from './Components/LoginButton';
+import LogoutButton from './Components/LogoutButton';
 function App() {
+
   return (
+    <>
+    <LoginButton/>
+    <LogoutButton/>
     <div className="App">
       <Router>
       <Navbar />
@@ -24,13 +29,12 @@ function App() {
         <h1>SEMOCoder</h1>
       </div>
         <Switch>
-        <Route exact path="/" component={Coder}/>
-        <Route exact path="/Coder" component={Coder} />
-        <Route exact path="/Login" component={Login} />
-        <Route exact path="/Signup" component={Signup} />
+        <Route exact path="/" component={Auth}/>
+        <Route exact path="/Coder" component={Auth} />
         </Switch>
       </Router>
     </div>
+    </>
   );
 }
 
