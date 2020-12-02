@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-monokai";
 
 import {
   Grid,
   Paper,
 } from "@material-ui/core";
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Prompts from "../Components/Prompts";
 
+
+
 class Coder extends React.Component {
+  
   render() {
     return (
       <Grid container spacing={3}>
@@ -24,7 +26,7 @@ class Coder extends React.Component {
         <Grid item xs>
           <AceEditor
             placeholder="Start coding here!"
-            mode="javascript"
+            mode="python"
             theme="monokai"
             onChange={() => { }}
             value={`function onLoad(editor) {
