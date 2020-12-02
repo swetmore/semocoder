@@ -8,7 +8,7 @@ const Auth = () => {
     return (
         isAuthenticated && (
         <div>
-            {user.sub}
+            <Coder/>
         </div>
         )
     )
