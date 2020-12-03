@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-monokai";
 
 import {
   Grid,
   Paper,
 } from "@material-ui/core";
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Prompts from "../Components/Prompts";
 
@@ -167,6 +166,7 @@ let acePanels = acePanelsDefault;
 
 
 class Coder extends React.Component {
+  
   render() {
     return (
       <Grid container spacing={3}>
@@ -204,20 +204,20 @@ class Coder extends React.Component {
 }
 
 
-document.getElementById("panel1bh-content").addEventListener("click", function() {updateAceEditor(1)}, false);
-document.getElementById("panel2bh-content").addEventListener("click", function() {updateAceEditor(2)}, false);
-document.getElementById("panel3bh-content").addEventListener("click", function() {updateAceEditor(3)}, false);
-document.getElementById("panel4bh-content").addEventListener("click", function() {updateAceEditor(4)}, false);
-document.getElementById("panel5bh-content").addEventListener("click", function() {updateAceEditor(5)}, false);
-document.getElementById("panel6bh-content").addEventListener("click", function() {updateAceEditor(6)}, false);
-document.getElementById("panel7bh-content").addEventListener("click", function() {updateAceEditor(7)}, false);
-document.getElementById("panel9bh-content").addEventListener("click", function() {updateAceEditor(9)}, false);
-document.getElementById("panel10bh-content").addEventListener("click", function() {updateAceEditor(10)}, false);
-document.getElementById("panel11bh-content").addEventListener("click", function() {updateAceEditor(11)}, false);
-document.getElementById("panel12bh-content").addEventListener("click", function() {updateAceEditor(12)}, false);
-document.getElementById("panel13bh-content").addEventListener("click", function() {updateAceEditor(13)}, false);
-document.getElementById("panel14bh-content").addEventListener("click", function() {updateAceEditor(14)}, false);
-document.getElementById("panel15bh-content").addEventListener("click", function() {updateAceEditor(15)}, false);
+// document.getElementById("panel1bh-content").addEventListener("click", function() {updateAceEditor(1)}, false);
+// document.getElementById("panel2bh-content").addEventListener("click", function() {updateAceEditor(2)}, false);
+// document.getElementById("panel3bh-content").addEventListener("click", function() {updateAceEditor(3)}, false);
+// document.getElementById("panel4bh-content").addEventListener("click", function() {updateAceEditor(4)}, false);
+// document.getElementById("panel5bh-content").addEventListener("click", function() {updateAceEditor(5)}, false);
+// document.getElementById("panel6bh-content").addEventListener("click", function() {updateAceEditor(6)}, false);
+// document.getElementById("panel7bh-content").addEventListener("click", function() {updateAceEditor(7)}, false);
+// document.getElementById("panel9bh-content").addEventListener("click", function() {updateAceEditor(9)}, false);
+// document.getElementById("panel10bh-content").addEventListener("click", function() {updateAceEditor(10)}, false);
+// document.getElementById("panel11bh-content").addEventListener("click", function() {updateAceEditor(11)}, false);
+// document.getElementById("panel12bh-content").addEventListener("click", function() {updateAceEditor(12)}, false);
+// document.getElementById("panel13bh-content").addEventListener("click", function() {updateAceEditor(13)}, false);
+// document.getElementById("panel14bh-content").addEventListener("click", function() {updateAceEditor(14)}, false);
+// document.getElementById("panel15bh-content").addEventListener("click", function() {updateAceEditor(15)}, false);
 
 
 // Replaces the aceEditor contents with code associated with the selected panel
