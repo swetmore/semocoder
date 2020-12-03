@@ -27,16 +27,15 @@ export default function Prompts() {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
-    // setExpanded(isExpanded ? panel : false);
-    for (var p in panels)
-    {
-      console.log(`P ${JSON.stringify(panels[p])}`)
-      if (panels[p].panelName === panel)
-      {
-        console.log("IN HERER")
-        panels[p].expanded = isExpanded ? panel : false
-      }
-    }
+    setExpanded(isExpanded ? panel : false);
+    // for (var p in panels)
+    // {
+    //   console.log(`P ${JSON.stringify(panels[p])}`)
+    //   if (panels[p].panelName === panel)
+    //   {
+    //     panels[p].expanded = isExpanded ? panel : false
+    //   }
+    // }
   };
   const [panels, setPanels] = React.useState([]);
 
@@ -58,15 +57,7 @@ export default function Prompts() {
         })
       ))
 
-    console.log(`${JSON.stringify(prompts)}`)
-    // prompts.forEach(myFunction)
 
-    // function myFunction(value, i)
-    // {
-    //   console.log(`index is ${i} and it is ${JSON.stringify(value)}`)
-    //   let panelName = "panel" + i
-     
-    // }
     let panels = []
     prompts.map((prompt, i) => (
       panels.push(new PanelClass("panel" + (i + 1), classes, expanded, handleChange)),
@@ -95,20 +86,20 @@ export default function Prompts() {
   </p>);
 
 
-  // const panel2 = new PanelClass("panel2", classes, expanded, handleChange);
-  // panel2.setHeading("Week 2:");
-  // panel2.setSecondaryHeading("Declaring instance variables");
-  // panel2.setDescriptionDetails(<p>
-  //   This incomplete program wants to preform some basic math, but some variables have not been initialized yet.
-  //   Line 2 creates a variable num1 and assigns it a value of 50. Lines 8-18 will perform a math operation with two
-  //   variables and will store the result in total. After that it will print the total.
-  // </p>);
-  // panel2.setChallengeDetails(<p>
-  //   In Python, a variable can be declared or have it's value changed by starting with the variable name, and then
-  //   assigning it a value. Variables can have any name that does not start with a number, does not include spaces,
-  //   or is not a reserved key word. Create four more variables on lines 3-6 and assign them values of your choice.
-  //   Then on lines 8, 11, 14, and 17, add each variable you made to the right of the math operation sign.
-  // </p>);
+  const panel2 = new PanelClass("panel2", classes, expanded, handleChange);
+  panel2.setHeading("Week 2:");
+  panel2.setSecondaryHeading("Declaring instance variables");
+  panel2.setDescriptionDetails(<p>
+    This incomplete program wants to preform some basic math, but some variables have not been initialized yet.
+    Line 2 creates a variable num1 and assigns it a value of 50. Lines 8-18 will perform a math operation with two
+    variables and will store the result in total. After that it will print the total.
+  </p>);
+  panel2.setChallengeDetails(<p>
+    In Python, a variable can be declared or have it's value changed by starting with the variable name, and then
+    assigning it a value. Variables can have any name that does not start with a number, does not include spaces,
+    or is not a reserved key word. Create four more variables on lines 3-6 and assign them values of your choice.
+    Then on lines 8, 11, 14, and 17, add each variable you made to the right of the math operation sign.
+  </p>);
 
 
   const panel3 = new PanelClass("panel3", classes, expanded, handleChange);
@@ -305,9 +296,9 @@ export default function Prompts() {
   // Invokes PanelClass.returnHTML() for each PanelClass object to return its respective HTML
   return (
     <div className={classes.root}>
-      {/* {panel1.returnHTML()}
-      {panel2.returnHTML()} */}
-      {/* {panel3.returnHTML()}
+      {panel1.returnHTML()}
+      {panel2.returnHTML()}
+      {panel3.returnHTML()}
       {panel4.returnHTML()}
       {panel5.returnHTML()}
       {panel6.returnHTML()}
@@ -318,10 +309,7 @@ export default function Prompts() {
       {panel12.returnHTML()}
       {panel13.returnHTML()}
       {panel14.returnHTML()}
-      {panel15.returnHTML()} */}
-       {panels.map(panel => (
-                    panel.returnHTML()
-                ))}
+      {panel15.returnHTML()}
     </div>
   )
 }
