@@ -25,6 +25,7 @@ export default function Prompts() {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+    console.log("hello");
   };
 
   // Creates a panel class and uses its setter methods to set all the field data
@@ -165,7 +166,7 @@ export default function Prompts() {
     variable as output.
   </p>);
   panel10.setChallengeDetails(<p>
-    Lines 9 through 16 is a function that calulates the distance between 2 points using the distance formula. Line 9
+    Lines 9 through 16 is a function that calculates the distance between 2 points using the distance formula. Line 9
     specifies that the function should take 4 different variables. Lines 13 and 14 use the math library to use the
     power and square root math functions. Line 16 returns the distance of the 2 points. Use the calculateDistance
     function in main to print the distance of three different sets of points.

@@ -16,7 +16,6 @@ export default class PanelClass {
         this.secondaryHeading = "";
         this.descriptionDetails = "";
         this.challengeDetails = "";
-
         this.classes = classes;
         this.expanded = expanded;
         this.handleChange = handleChange;
