@@ -1,4 +1,5 @@
 import React from "react";
+import './Navbar.css';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,6 +11,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import Link from "react-router-dom/Link";
 
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  appBarBackground: { background: "#2196f3" },
 }));
 
 export default function NavBar() {
@@ -28,41 +31,13 @@ export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBarBackground}>
+      <AppBar position="static" className="Appbar" style={{backgroundColor:"red"}}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-  
-          </IconButton>
-          <Menu
-            id="fade-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-          >
-            <MenuItem onClick={handleClose} component={Link} to="/">
-              Coder
-            </MenuItem>
-          </Menu>
-          <Button color="inherit" component={Link} to="/Coder">
-            <Typography color="inherit">Coder</Typography>
-          </Button>
+        <span className="Logo" style={{color: "black"}}>SEMOCoder</span>
+        <LoginButton className="Login"/>
+        <LogoutButton/>
         </Toolbar>
       </AppBar>
     </div>

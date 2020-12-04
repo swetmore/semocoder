@@ -6,16 +6,11 @@ import {
 } from "react-router-dom";
 
 import Auth from './Components/Auth';
-import Coder from './Pages/Coder.js';
 import Navbar from './Components/Navbar.js';
-import LoginButton from './Components/LoginButton';
-import LogoutButton from './Components/LogoutButton';
 function App() {
 
   return (
     <>
-    <LoginButton/>
-    <LogoutButton/>
     <div className="App">
       <Router>
       <Navbar />
@@ -26,7 +21,6 @@ function App() {
           alignItems: "center",
         }}
       >
-        <h1>SEMOCoder</h1>
       </div>
         <Switch>
         <Route exact path="/" component={Auth}/>

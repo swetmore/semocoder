@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PanelClass from "./PanelClass.js";
+import Firebase from "../Components/Firebase";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,10 +25,53 @@ const useStyles = makeStyles((theme) => ({
 export default function Prompts() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
-    console.log("hello");
+
+    // for (var p in panels)
+    // {
+    //   console.log(`P ${JSON.stringify(panels[p])}`)
+    //   if (panels[p].panelName === panel)
+    //   {
+    //     panels[p].expanded = isExpanded ? panel : false
+    //   }
+    // }
+
   };
+  const [panels, setPanels] = React.useState([]);
+
+
+  useEffect(() => {
+    getPrompts();
+  }, []);
+
+  const getPrompts = async () => {
+    let prompts = [];
+    const db = Firebase.firestore();
+    const data = await db.collection("prompts").get();
+        data.docs.map(doc => (
+        prompts.push({
+          heading: doc.data().heading,
+          secHeading: doc.data().secHeading,
+          description: doc.data().description,
+          challenge: doc.data().challenge,
+        })
+      ))
+
+
+    let panels = []
+    prompts.map((prompt, i) => (
+      panels.push(new PanelClass("panel" + (i + 1), classes, expanded, handleChange)),
+      panels[i].setHeading(prompt.heading),
+      panels[i].setSecondaryHeading(prompt.secHeading),
+      panels[i].setDescriptionDetails(<p>{prompt.description}</p>),
+      panels[i].setChallengeDetails(<p>{prompt.challenge}</p>)
+      // console.log(`index is ${i} and it is ${JSON.stringify(prompt)}`)
+    ))
+    setPanels(panels)
+    console.log(`panels is ${JSON.stringify(panels)}`)
+  }
 
   // Creates a panel class and uses its setter methods to set all the field data
   const panel1 = new PanelClass("panel1", classes, expanded, handleChange);

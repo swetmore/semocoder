@@ -1,0 +1,43 @@
+.Appbar {
+    color: black;
+    background-color: red;
+    font-size: 130px;
+    font-weight: 100;
+    font: outline;
+}
+
+.Logo {
+    font-family: 'Arial Black', sans-serif;
+    color: "black";
+    font-size: 25px;
+    margin-right: 15px;
+}
+
+.Login{
+    position: absolute;
+    right: 20px;
+    border: 3.5px solid black;
+    color: black;
+    background-color: lightslategray;
+    font-size: large;
+}
+
+.Run{
+    border: 3.5px solid black;
+    color: black;
+    background-color: lightslategray;
+    font-size: large;
+    position: relative;
+    left: -20px;
+    top: 5px;
+}
+
+.Save{
+    border: 3.5px solid black;
+    color: black;
+    background-color: lightslategray;
+    font-size: large;
+    position: relative;
+    right: -20px;
+    top: 5px;
+}

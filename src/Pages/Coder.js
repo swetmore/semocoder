@@ -8,8 +8,9 @@ import {
   Paper,
 } from "@material-ui/core";
 import { useAuth0 } from '@auth0/auth0-react';
-
 import Prompts from "../Components/Prompts";
+import Firebase from "../Components/Firebase";
+
 
 let acePanelsDefault = [15];
 let currentAcePanel = 0;
@@ -165,17 +166,19 @@ acePanelsDefault[15] = "def main:\n" +
 let acePanels = acePanelsDefault;
 
 
-class Coder extends React.Component {
-  
-  render() {
-    return (
-      <Grid container spacing={3}>
-        <Grid item xs>
-          <Paper>
-           <Prompts/>
-          </Paper>
-        </Grid>
-        <Grid id="aceGrid" item xs>
+  class Coder extends React.Component {
+    render() {
+  return (
+    <div>
+      <h1 style={{paddingBottom:"20px"}}>CS101 Supplementary Content</h1>
+    <Grid container spacing={3}>
+             <Grid item xs>
+               <Paper>
+                 <Prompts />
+               </Paper>
+             </Grid>
+             <div>
+             <Grid id="aceGrid" item xs>
           <AceEditor
             placeholder="Start coding here!"
             id={"aceEditor"}
@@ -198,8 +201,12 @@ class Coder extends React.Component {
             }}
           />
         </Grid>
-      </Grid>
-    )
+            <button className="Run"  onClick={() => {}}>Run</button>
+             <button className="Save" onClick={() => {}}>Save</button>
+            </div>
+          </Grid>
+          </div>
+  )
   }
 }
 
@@ -222,33 +229,33 @@ class Coder extends React.Component {
 
 // Replaces the aceEditor contents with code associated with the selected panel
 function updateAceEditor(newAcePanel) {
-    // The new HTML for the ace editor. Everything is the same except the coding content
-    let newEditorHTML = "<AceEditor" +
-        "placeholder=\"Start coding here!\"" +
-        "id={\"aceEditor\"}" +
-        "mode=\"python\"" +
-        "theme=\"monokai\"" +
-        "onChange={() => { }}" +
-        "value={acePanels[" + newAcePanel + "]}" +  // Updates the coding content
-        "fontSize={14}" +
-        "showPrintMargin={true}" +
-        "showGutter={true}" +
-        "highlightActiveLine={true}" +
-        "name=\"Code Editor\"" +
-        "editorProps={{ $blockScrolling: true }}" +
-        "setOptions={{" +
-        "    enableBasicAutocompletion: false," +
-        "    enableLiveAutocompletion: false," +
-        "    enableSnippets: false," +
-        "    showLineNumbers: true," +
-        "    tabSize: 2," +
-        "}}" +
-    "/>";
+  // The new HTML for the ace editor. Everything is the same except the coding content
+  let newEditorHTML = "<AceEditor" +
+      "placeholder=\"Start coding here!\"" +
+      "id={\"aceEditor\"}" +
+      "mode=\"python\"" +
+      "theme=\"monokai\"" +
+      "onChange={() => { }}" +
+      "value={acePanels[" + newAcePanel + "]}" +  // Updates the coding content
+      "fontSize={14}" +
+      "showPrintMargin={true}" +
+      "showGutter={true}" +
+      "highlightActiveLine={true}" +
+      "name=\"Code Editor\"" +
+      "editorProps={{ $blockScrolling: true }}" +
+      "setOptions={{" +
+      "    enableBasicAutocompletion: false," +
+      "    enableLiveAutocompletion: false," +
+      "    enableSnippets: false," +
+      "    showLineNumbers: true," +
+      "    tabSize: 2," +
+      "}}" +
+  "/>";
 
-    // Deletes the aceEditor element from inside the grid element and adds a new one with the updated content
-    document.getElementById("aceEditor").remove();
-    let newGridHTML = document.getElementById("aceGrid")
-    newGridHTML.innerHTML = newEditorHTML;
+  // Deletes the aceEditor element from inside the grid element and adds a new one with the updated content
+  document.getElementById("aceEditor").remove();
+  let newGridHTML = document.getElementById("aceGrid")
+  newGridHTML.innerHTML = newEditorHTML;
 }
 
-export default Coder;
+export default Coder; 
