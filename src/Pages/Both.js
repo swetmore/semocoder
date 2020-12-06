@@ -10,7 +10,13 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import Firebase from "../Components/Firebase";
 import { makeStyles } from "@material-ui/core/styles";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import PanelClass from "../Components/PanelClass.js";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,20 +40,54 @@ export default function Coder() {
   const [dbUser, setDbUser] = useState({});
   const { user } = useAuth0();
   const { isAuthenticated } = useAuth0();
-  const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [currentPanel, setCurrentPanel] = React.useState("none");
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
-    setCurrentPanel(isExpanded ? panel : undefined) //TODO REMOVE THIS?
-
 
     // if clicking on current panel and just toggling closed, still keep as current panel, don't erase code
     // if clicking on different panel, then erase
     // either way just set current to whatever selected, will just be redundant for toggling current
     setCurrentPanel(panel)
 
-    setEditorCode((panelMap.get(currentPanel)).code)
+    setEditorChange(true);
+  };
+
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [rOpen, setROpen] = React.useState(false);
+  const [nsOpen, setNSOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleNSClick = () => {
+    setNSOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleRClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setROpen(false);
+  };
+
+  const handleNSClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setNSOpen(false);
   };
 
 
@@ -444,6 +484,7 @@ export default function Coder() {
   let ed = React.createRef();
 
   const [editorCode, setEditorCode] = useState((panelMap.get(currentPanel)).code)
+  const [editorChange, setEditorChange] = useState(false)
 
   const saveCode = async () => {
     //find current panel and run into it
@@ -462,14 +503,19 @@ export default function Coder() {
       })
       //also update dbUser.code
       dbUser[access] = currCode
+
+      handleClick()
+    }
+    else {
+      handleNSClick()
     }
 
   }
 
   function resetCode() {
     //take current panel, and save default ace panel into dbUsers code
-    console.log(`Resetting, current panel is ${currentPanel}`)
     if (currentPanel !== "none") {
+      setROpen(true)
       let access = (panelMap.get(currentPanel)).access;
       let revertDefault = (panelMap.get(currentPanel)).default;
       const db = Firebase.firestore();
@@ -484,6 +530,10 @@ export default function Coder() {
       setEditorCode(revertDefault)
       //reset code on dbUser.code
       dbUser[access] = revertDefault
+      setEditorChange(true)
+    }
+    else {
+      handleNSClick()
     }
   }
 
@@ -494,6 +544,12 @@ export default function Coder() {
     }
   }, []);
 
+  useEffect(() => {
+    if (editorChange) {
+      setEditorChange(false);
+      setEditorCode((panelMap.get(currentPanel)).code);
+    }
+  })
 
   const getUser = async () => {
     const db = Firebase.firestore();
@@ -592,8 +648,8 @@ export default function Coder() {
               {panel14.returnHTML()}
               {panel15.returnHTML()}
             </div>
-  )
-                    </Paper>
+
+          </Paper>
         </Grid>
         <div>
           <Grid id="aceGrid" item xs>
@@ -604,7 +660,7 @@ export default function Coder() {
               mode="python"
               theme="monokai"
               onChange={() => { }}
-              value={(panelMap.get(currentPanel)).code}
+              value={editorCode || panelMap.get('none')}
               fontSize={14}
               showPrintMargin={true}
               showGutter={true}
@@ -621,7 +677,22 @@ export default function Coder() {
             />
           </Grid>
           <button className="Save" onClick={saveCode}>Save</button>
+          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              Code Saved!
+        </Alert>
+          </Snackbar>
           <button className="Reset" onClick={resetCode}>Reset to Default Code</button>
+          <Snackbar open={rOpen} autoHideDuration={3000} onClose={handleRClose}>
+            <Alert onClose={handleRClose} severity="success">
+              Code Reset!
+        </Alert>
+          </Snackbar>
+          <Snackbar open={nsOpen} autoHideDuration={3000} onClose={handleNSClose}>
+            <Alert onClose={handleNSClose} severity="warning">
+              Select a Prompt First!
+        </Alert>
+          </Snackbar>
         </div>
       </Grid>
     </div>
