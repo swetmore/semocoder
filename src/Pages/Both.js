@@ -466,11 +466,6 @@ export default function Coder() {
 
   }
 
-  function runCode() {
-    console.log("Code ran")
-    //how
-  }
-
   function resetCode() {
     //take current panel, and save default ace panel into dbUsers code
     console.log(`Resetting, current panel is ${currentPanel}`)
@@ -625,7 +620,6 @@ export default function Coder() {
               }}
             />
           </Grid>
-          <button className="Run" onClick={runCode}>Run</button>
           <button className="Save" onClick={saveCode}>Save</button>
           <button className="Reset" onClick={resetCode}>Reset to Default Code</button>
         </div>
