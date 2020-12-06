@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
@@ -7,13 +7,9 @@ import {
   Grid,
   Paper,
 } from "@material-ui/core";
-import { useAuth0 } from '@auth0/auth0-react';
 import Prompts from "../Components/Prompts";
-import Firebase from "../Components/Firebase";
-
 
 let acePanelsDefault = [15];
-let currentAcePanel = 0;
 
 acePanelsDefault[0] = "def main:\n" +
     "  print(\"Select a panel on the left to select a challenge!\")\n" +
@@ -208,54 +204,6 @@ let acePanels = acePanelsDefault;
           </div>
   )
   }
-}
-
-
-// document.getElementById("panel1bh-content").addEventListener("click", function() {updateAceEditor(1)}, false);
-// document.getElementById("panel2bh-content").addEventListener("click", function() {updateAceEditor(2)}, false);
-// document.getElementById("panel3bh-content").addEventListener("click", function() {updateAceEditor(3)}, false);
-// document.getElementById("panel4bh-content").addEventListener("click", function() {updateAceEditor(4)}, false);
-// document.getElementById("panel5bh-content").addEventListener("click", function() {updateAceEditor(5)}, false);
-// document.getElementById("panel6bh-content").addEventListener("click", function() {updateAceEditor(6)}, false);
-// document.getElementById("panel7bh-content").addEventListener("click", function() {updateAceEditor(7)}, false);
-// document.getElementById("panel9bh-content").addEventListener("click", function() {updateAceEditor(9)}, false);
-// document.getElementById("panel10bh-content").addEventListener("click", function() {updateAceEditor(10)}, false);
-// document.getElementById("panel11bh-content").addEventListener("click", function() {updateAceEditor(11)}, false);
-// document.getElementById("panel12bh-content").addEventListener("click", function() {updateAceEditor(12)}, false);
-// document.getElementById("panel13bh-content").addEventListener("click", function() {updateAceEditor(13)}, false);
-// document.getElementById("panel14bh-content").addEventListener("click", function() {updateAceEditor(14)}, false);
-// document.getElementById("panel15bh-content").addEventListener("click", function() {updateAceEditor(15)}, false);
-
-
-// Replaces the aceEditor contents with code associated with the selected panel
-function updateAceEditor(newAcePanel) {
-  // The new HTML for the ace editor. Everything is the same except the coding content
-  let newEditorHTML = "<AceEditor" +
-      "placeholder=\"Start coding here!\"" +
-      "id={\"aceEditor\"}" +
-      "mode=\"python\"" +
-      "theme=\"monokai\"" +
-      "onChange={() => { }}" +
-      "value={acePanels[" + newAcePanel + "]}" +  // Updates the coding content
-      "fontSize={14}" +
-      "showPrintMargin={true}" +
-      "showGutter={true}" +
-      "highlightActiveLine={true}" +
-      "name=\"Code Editor\"" +
-      "editorProps={{ $blockScrolling: true }}" +
-      "setOptions={{" +
-      "    enableBasicAutocompletion: false," +
-      "    enableLiveAutocompletion: false," +
-      "    enableSnippets: false," +
-      "    showLineNumbers: true," +
-      "    tabSize: 2," +
-      "}}" +
-  "/>";
-
-  // Deletes the aceEditor element from inside the grid element and adds a new one with the updated content
-  document.getElementById("aceEditor").remove();
-  let newGridHTML = document.getElementById("aceGrid")
-  newGridHTML.innerHTML = newEditorHTML;
 }
 
 export default Coder; 

@@ -41,3 +41,14 @@
     right: -20px;
     top: 5px;
 }
+
+
+.Reset{
+    border: 3.5px solid black;
+    color: black;
+    background-color: lightslategray;
+    font-size: large;
+    position: relative;
+    right: -60px;
+    top: 5px;
+}

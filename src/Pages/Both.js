@@ -1,7 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import PanelClass from "./PanelClass.js";
+import React, { useEffect, useState } from "react";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/theme-monokai";
 
+import {
+  Grid,
+  Paper,
+} from "@material-ui/core";
+import { useAuth0 } from '@auth0/auth0-react';
+import Firebase from "../Components/Firebase";
+import { makeStyles } from "@material-ui/core/styles";
+import PanelClass from "../Components/PanelClass.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,54 +30,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Prompts() {
+export default function Coder() {
+  const [dbUser, setDbUser] = useState({});
+  const { user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [currentPanel, setCurrentPanel] = React.useState("none");
-
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
-    setCurrentPanel(isExpanded ? panel : undefined)
+    setCurrentPanel(isExpanded ? panel : undefined) //TODO REMOVE THIS?
+
+
     // if clicking on current panel and just toggling closed, still keep as current panel, don't erase code
     // if clicking on different panel, then erase
     // either way just set current to whatever selected, will just be redundant for toggling current
     setCurrentPanel(panel)
 
-    //on change, access user's current code for that newly expanded panel and display in editor
-
-    // console.log(`current panel is ${JSON.stringify(currentPanel)}`)
+    setEditorCode((panelMap.get(currentPanel)).code)
   };
 
-  // useEffect(() => {
-  //   getPrompts();
-  // }, []);
-
-  // const getPrompts = async () => {
-  //   let prompts = [];
-  //   const db = Firebase.firestore();
-  //   const data = await db.collection("prompts").get();
-  //       data.docs.map(doc => (
-  //       prompts.push({
-  //         heading: doc.data().heading,
-  //         secHeading: doc.data().secHeading,
-  //         description: doc.data().description,
-  //         challenge: doc.data().challenge,
-  //       })
-  //     ))
-
-
-  //   let panels = []
-  //   prompts.map((prompt, i) => (
-  //     panels.push(new PanelClass("panel" + (i + 1), classes, expanded, handleChange)),
-  //     panels[i].setHeading(prompt.heading),
-  //     panels[i].setSecondaryHeading(prompt.secHeading),
-  //     panels[i].setDescriptionDetails(<p>{prompt.description}</p>),
-  //     panels[i].setChallengeDetails(<p>{prompt.challenge}</p>)
-  //     // console.log(`index is ${i} and it is ${JSON.stringify(prompt)}`)
-  //   ))
-  //   setPanels(panels)
-  //   // console.log(`panels is ${JSON.stringify(panels)}`)
-  // }
 
   // Creates a panel class and uses its setter methods to set all the field data
   const panel1 = new PanelClass("panel1", classes, expanded, handleChange);
@@ -291,24 +272,364 @@ export default function Prompts() {
     and exit.
   </p>);
 
-  // Returns the HTML for every single panel
-  // Invokes PanelClass.returnHTML() for each PanelClass object to return its respective HTML
+
+
+  let acePanelsDefault = [15];
+
+  acePanelsDefault[0] = "def main:\n" +
+    "  print(\"Select a panel on the left to select a challenge!\")\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[1] = "def main:\n" +
+    "  print(\"This program illustrates a chaotic function\")\n" +
+    "  x = eval(input(\"Enter a number between 0 and 1: \"))\n" +
+    "\n" +
+    "  for i in range(10)\n" +
+    "    x = 3.9 * x * (1 - x)\n" +
+    "    print(x)\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[2] = "def main:\n" +
+    "  num1 = 50\n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  total = num1 +\n" +
+    "  print(total)\n" +
+    "  \n" +
+    "  total = num1 -\n" +
+    "  print(total)\n" +
+    "  \n" +
+    "  total = num1 *\n" +
+    "  print(total)\n" +
+    "  total = num1 /\n" +
+    "  print(total)\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[3] = "def main:\n" +
+    "  print(\"Hello! This program can add two numbers together\")\n" +
+    "  num1 = 6\n" +
+    "  num2 = 2\n" +
+    "  print()\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[4] = "def main:\n" +
+    "  print(\"This program calculates the area of a trapezoid\")\n" +
+    "  base1 = \n" +
+    "  base2 =\n" +
+    "  height =\n" +
+    "  \n" +
+    "  area =\n" +
+    "  print()\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[5] = "def main:\n" +
+    "  print(\"This program calculates the cost of a car ride\")\n" +
+    "  length =\n" +
+    "  time =\n" +
+    "  passengers =\n" +
+    "  \n" +
+    "  \n" +
+    "  print(\"The cost for each passenger is\", cost)\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[6] = "def main:\n" +
+    "  \n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[7] = "def main:\n" +
+    "  words = [\"hello\", \"world\"]\n" +
+    "  words.append(\"CS101\")\n" +
+    "  \n" +
+    "  print(words[0])\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[8] = "def main:\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[9] = "def main:\n" +
+    "  numbers = [7, 12, -2, 15, 4, 9, 7, 20, 6, -5]\n" +
+    "  sum = int(0)\n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  print(sum / len(numbers))\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[10] = "def main:\n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "\n" +
+    "\n" +
+    "def calculateDistance(x1, y1, x2, y2):\n" +
+    "  vertDist = int(x2 - y2)\n" +
+    "  horzDist = int(y2 - y1)\n" +
+    "  \n" +
+    "  vertDist = math.pow(vertDist, 2)\n" +
+    "  horzDist = math.pow(horzDist, 2)\n" +
+    "  \n" +
+    "  return math.sqrt(vertDist + horzDist)\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[11] = "def main:\n" +
+    "  \n" +
+    "\n" +
+    "\n" +
+    "def average(numbers)\n" +
+    "  \n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[12] = "def main:\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[13] = "def main:\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[14] = "def main:\n" +
+    "  fileName = \n" +
+    "  file = open(fileName, \"r\")\n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  \n" +
+    "  file.close()\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  acePanelsDefault[15] = "def main:\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "main()\n";
+  let panelMap = new Map();
+  panelMap.set('none', acePanelsDefault[0])
+  panelMap.set('panel1', { code: dbUser.p1Code, access: "p1Code", default: acePanelsDefault[1] })
+  panelMap.set('panel2', { code: dbUser.p2Code, access: "p2Code", default: acePanelsDefault[2] })
+  panelMap.set('panel3', { code: dbUser.p3Code, access: "p3Code", default: acePanelsDefault[3] })
+  panelMap.set('panel4', { code: dbUser.p4Code, access: "p4Code", default: acePanelsDefault[4] })
+  panelMap.set('panel5', { code: dbUser.p5Code, access: "p5Code", default: acePanelsDefault[5] })
+  panelMap.set('panel6', { code: dbUser.p6Code, access: "p6Code", default: acePanelsDefault[6] })
+  panelMap.set('panel7', { code: dbUser.p7Code, access: "p7Code", default: acePanelsDefault[7] })
+  panelMap.set('panel8', { code: dbUser.p8Code, access: "p8Code", default: acePanelsDefault[8] })
+  panelMap.set('panel9', { code: dbUser.p9Code, access: "p9Code", default: acePanelsDefault[9] })
+  panelMap.set('panel10', { code: dbUser.p10Code, access: "p10Code", default: acePanelsDefault[10] })
+  panelMap.set('panel11', { code: dbUser.p11Code, access: "p11Code", default: acePanelsDefault[11] })
+  panelMap.set('panel12', { code: dbUser.p12Code, access: "p12Code", default: acePanelsDefault[12] })
+  panelMap.set('panel13', { code: dbUser.p13Code, access: "p13Code", default: acePanelsDefault[13] })
+  panelMap.set('panel14', { code: dbUser.p14Code, access: "p14Code", default: acePanelsDefault[14] })
+  panelMap.set('panel15', { code: dbUser.p15Code, access: "p15Code", default: acePanelsDefault[15] })
+
+  let ed = React.createRef();
+
+  const [editorCode, setEditorCode] = useState((panelMap.get(currentPanel)).code)
+
+  const saveCode = async () => {
+    //find current panel and run into it
+    if (currentPanel !== "none") {
+      let access = (panelMap.get(currentPanel)).access;
+      //get text from editor
+      let currCode = ed.current.editor.getValue();
+
+      // save in db
+      const db = Firebase.firestore();
+      let sub = user.sub;
+      let id = sub.split("|")[1];
+      var usersRef = db.collection("users");
+      usersRef.doc(id).update({
+        [access]: currCode
+      })
+      //also update dbUser.code
+      dbUser[access] = currCode
+    }
+
+  }
+
+  function runCode() {
+    console.log("Code ran")
+    //how
+  }
+
+  function resetCode() {
+    //take current panel, and save default ace panel into dbUsers code
+    console.log(`Resetting, current panel is ${currentPanel}`)
+    if (currentPanel !== "none") {
+      let access = (panelMap.get(currentPanel)).access;
+      let revertDefault = (panelMap.get(currentPanel)).default;
+      const db = Firebase.firestore();
+      let sub = user.sub;
+      let id = sub.split("|")[1];
+      var usersRef = db.collection("users");
+      //reset code in db
+      usersRef.doc(id).update({
+        [access]: revertDefault
+      })
+      //reset code in editor
+      setEditorCode(revertDefault)
+      //reset code on dbUser.code
+      dbUser[access] = revertDefault
+    }
+  }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      //check for user, if not is db, give default values, and retrieve, else just retrieve
+      getUser();
+    }
+  }, []);
+
+
+  const getUser = async () => {
+    const db = Firebase.firestore();
+    let sub = user.sub;
+    let id = sub.split("|")[1];
+    var usersRef = db.collection("users");
+    var query = await usersRef.where("id", "==", id).get();
+    let info = []
+    query.docs.map(doc => (
+      info.push({
+        name: doc.data().name,
+        email: doc.data().email,
+        id: doc.data().id,
+        p1Code: doc.data().p1Code,
+        p2Code: doc.data().p2Code,
+        p3Code: doc.data().p3Code,
+        p4Code: doc.data().p4Code,
+        p5Code: doc.data().p5Code,
+        p6Code: doc.data().p6Code,
+        p7Code: doc.data().p7Code,
+        p8Code: doc.data().p8Code,
+        p9Code: doc.data().p9Code,
+        p10Code: doc.data().p10Code,
+        p11Code: doc.data().p11Code,
+        p12Code: doc.data().p12Code,
+        p13Code: doc.data().p13Code,
+        p14Code: doc.data().p14Code,
+        p15Code: doc.data().p15Code,
+      })
+    ))
+    if (info.length === 0) {
+      usersRef.doc(id).set({
+        name: user.name,
+        email: user.email,
+        id: id,
+        p1Code: acePanelsDefault[1],
+        p2Code: acePanelsDefault[2],
+        p3Code: acePanelsDefault[3],
+        p4Code: acePanelsDefault[4],
+        p5Code: acePanelsDefault[5],
+        p6Code: acePanelsDefault[6],
+        p7Code: acePanelsDefault[7],
+        p8Code: acePanelsDefault[8],
+        p9Code: acePanelsDefault[9],
+        p10Code: acePanelsDefault[10],
+        p11Code: acePanelsDefault[11],
+        p12Code: acePanelsDefault[12],
+        p13Code: acePanelsDefault[13],
+        p14Code: acePanelsDefault[14],
+        p15Code: acePanelsDefault[15],
+      })
+    }
+    query.docs.map(doc => (
+      setDbUser({
+        name: doc.data().name,
+        email: doc.data().email,
+        id: doc.data().id,
+        p1Code: doc.data().p1Code,
+        p2Code: doc.data().p2Code,
+        p3Code: doc.data().p3Code,
+        p4Code: doc.data().p4Code,
+        p5Code: doc.data().p5Code,
+        p6Code: doc.data().p6Code,
+        p7Code: doc.data().p7Code,
+        p8Code: doc.data().p8Code,
+        p9Code: doc.data().p9Code,
+        p10Code: doc.data().p10Code,
+        p11Code: doc.data().p11Code,
+        p12Code: doc.data().p12Code,
+        p13Code: doc.data().p13Code,
+        p14Code: doc.data().p14Code,
+        p15Code: doc.data().p15Code,
+      })
+    ))
+  }
+
   return (
-    <div className={classes.root}>
-      <div currPanel={currentPanel}>{panel1.returnHTML()}</div>
-      <div currPanel={currentPanel}>{panel2.returnHTML()}</div>
-      {/* {panel3.returnHTML()}
-      {panel4.returnHTML()}
-      {panel5.returnHTML()}
-      {panel6.returnHTML()}
-      {panel7.returnHTML()}
-      {panel9.returnHTML()}
-      {panel10.returnHTML()}
-      {panel11.returnHTML()}
-      {panel12.returnHTML()}
-      {panel13.returnHTML()}
-      {panel14.returnHTML()}
-      {panel15.returnHTML()} */}
+    <div>
+      <h1 style={{ paddingBottom: "20px" }}>CS101 Supplementary Content</h1>
+      <Grid container spacing={3}>
+        <Grid item xs>
+          <Paper>
+            <div className={classes.root}>
+              {panel1.returnHTML()}
+              {panel2.returnHTML()}
+              {panel3.returnHTML()}
+              {panel4.returnHTML()}
+              {panel5.returnHTML()}
+              {panel6.returnHTML()}
+              {panel7.returnHTML()}
+              {panel9.returnHTML()}
+              {panel10.returnHTML()}
+              {panel11.returnHTML()}
+              {panel12.returnHTML()}
+              {panel13.returnHTML()}
+              {panel14.returnHTML()}
+              {panel15.returnHTML()}
+            </div>
+  )
+                    </Paper>
+        </Grid>
+        <div>
+          <Grid id="aceGrid" item xs>
+            <AceEditor
+              ref={ed}
+              placeholder="Start coding here!"
+              id={"aceEditor"}
+              mode="python"
+              theme="monokai"
+              onChange={() => { }}
+              value={(panelMap.get(currentPanel)).code}
+              fontSize={14}
+              showPrintMargin={true}
+              showGutter={true}
+              highlightActiveLine={true}
+              name="Code Editor"
+              editorProps={{ $blockScrolling: true }}
+              setOptions={{
+                enableBasicAutocompletion: false,
+                enableLiveAutocompletion: false,
+                enableSnippets: false,
+                showLineNumbers: true,
+                tabSize: 2,
+              }}
+            />
+          </Grid>
+          <button className="Run" onClick={runCode}>Run</button>
+          <button className="Save" onClick={saveCode}>Save</button>
+          <button className="Reset" onClick={resetCode}>Reset to Default Code</button>
+        </div>
+      </Grid>
     </div>
   )
 }
